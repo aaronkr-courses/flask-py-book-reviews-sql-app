@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{% block title %}Bookly{% endblock %} | 책 리뷰</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+<header class="topbar"><div class="wrap nav"><a href="{{url_for('home')}}" class="brand"><span class="brand-icon">▥</span> bookly<span class="brand-dot">.</span></a><nav><a class="{{'active' if page=='home' else ''}}" href="{{url_for('home')}}">책 둘러보기</a><a class="{{'active' if page=='favorites' else ''}}" href="{{url_for('favorites')}}">♡ 즐겨찾기</a></nav><form class="user-switch" method="post" action="{{url_for('switch_user')}}"><label for="user_id">사용자</label><select id="user_id" name="user_id" onchange="this.form.submit()">{% for user in users %}<option value="{{user.id}}" {% if current_user and current_user.id==user.id %}selected{% endif %}>{{user.username}}</option>{% endfor %}</select></form></div></header>
+<main class="wrap">{% with messages = get_flashed_messages(with_categories=true) %}{% for category,message in messages %}<div class="flash {{category}}" role="status">{{message}}</div>{% endfor %}{% endwith %}{% block content %}{% endblock %}</main>
+<footer class="wrap footer">Bookly · MySQL + Flask classroom project <span>데이터베이스 설계 실습</span></footer>
+</body></html>
